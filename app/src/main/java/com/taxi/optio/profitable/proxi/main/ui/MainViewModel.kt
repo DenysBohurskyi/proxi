@@ -1,14 +1,15 @@
 package com.taxi.optio.profitable.proxi.main.ui
 
+import androidx.lifecycle.ViewModel
 import com.taxi.optio.profitable.proxi.main.domain.PriceListInteractor
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class MainViewModel {
+class MainViewModel: ViewModel(), KoinComponent {
 
+    val interactor by inject<PriceListInteractor>()
 
-    constructor(interactor: PriceListInteractor) : ViewModel(){
+    val stringList = interactor.getPriceList()
 
-    }
-
-//    val stringList = interactor.getPriceList()
 
 }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.taxi.optio.profitable.proxi.R
 import com.taxi.optio.profitable.proxi.base.BaseFragment
 
-class MainFragment : BaseFragment() {
+class MainFragment : BaseFragment(){
 
     override val layout: Int = R.layout.fr_main
 
@@ -14,6 +14,7 @@ class MainFragment : BaseFragment() {
     }
 
     private lateinit var viewModel: MainViewModel
+//    val viewModel1: MainViewModel by viewModel()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

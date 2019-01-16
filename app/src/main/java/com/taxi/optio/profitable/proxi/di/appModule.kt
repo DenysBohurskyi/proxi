@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.taxi.optio.profitable.proxi.BuildConfig
+import com.taxi.optio.profitable.proxi.main.domain.PriceListInteractor
 import com.taxi.optio.profitable.proxi.main.domain.PriceListInteractorImpl
 import com.taxi.optio.profitable.proxi.main.repository.RemoteRepository
 import com.taxi.optio.profitable.proxi.main.repository.RemoteRepositoryImpl
@@ -17,29 +18,29 @@ import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 import java.util.concurrent.TimeUnit
 
-val appModule: Module = module {
+val appModulec: Module = module {
 
 }
 
 val viewModelModule: Module = module {
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel() }
 }
 
 val interactorModule: Module = module {
 
-    factory { PriceListInteractorImpl(get()) }
-
+    single<PriceListInteractor>{ PriceListInteractorImpl(get())}
+//    single<String>("name") { "TestExample" }
 }
 
 val repositoryModule: Module = module {
 
-    single { RemoteRepositoryImpl(get()) as RemoteRepository }
+    single<RemoteRepository>(createOnStart = true){ RemoteRepositoryImpl()}
 
 }
 
 val networkModule: Module = module {
 
-    single { Networking(get(), get()).create(RestService::class.java) }
+    single{ Networking(get(), get()).create(RestService::class.java) }
 
     single {
         GsonBuilder()
