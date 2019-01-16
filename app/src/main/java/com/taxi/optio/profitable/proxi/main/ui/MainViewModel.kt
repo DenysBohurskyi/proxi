@@ -9,6 +9,6 @@ class MainViewModel {
 
     }
 
-    val stringList = interactor.getPriceList()
+//    val stringList = interactor.getPriceList()
 
 }
