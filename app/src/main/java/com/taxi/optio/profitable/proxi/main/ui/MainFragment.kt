@@ -1,4 +1,4 @@
-package com.taxi.optio.profitable.proxi.ui.main
+package com.taxi.optio.profitable.proxi.main.ui
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -18,6 +18,9 @@ class MainFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        println(viewModel.stringList)
+        println()
     }
 
 }

@@ -2,7 +2,7 @@ package com.taxi.optio.profitable.proxi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.taxi.optio.profitable.proxi.ui.main.MainFragment
+import com.taxi.optio.profitable.proxi.main.ui.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
