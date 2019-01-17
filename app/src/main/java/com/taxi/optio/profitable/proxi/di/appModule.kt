@@ -28,13 +28,13 @@ val viewModelModule: Module = module {
 
 val interactorModule: Module = module {
 
-    single<PriceListInteractor>{ PriceListInteractorImpl(get())}
+    factory<PriceListInteractor>{ PriceListInteractorImpl(get())}
 //    single<String>("name") { "TestExample" }
 }
 
 val repositoryModule: Module = module {
 
-    single<RemoteRepository>(createOnStart = true){ RemoteRepositoryImpl()}
+    factory<RemoteRepository>{ RemoteRepositoryImpl()}
 
 }
 
