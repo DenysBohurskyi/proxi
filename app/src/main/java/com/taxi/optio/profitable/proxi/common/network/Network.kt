@@ -1,4 +1,4 @@
-package com.taxi.optio.profitable.proxi.common.Network
+package com.taxi.optio.profitable.proxi.common.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

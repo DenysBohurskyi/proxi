@@ -1,7 +1,6 @@
 package com.taxi.optio.profitable.proxi.di
 
 import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.taxi.optio.profitable.proxi.BuildConfig
 import com.taxi.optio.profitable.proxi.main.domain.PriceListInteractor
@@ -33,7 +32,7 @@ val interactorModule: Module = module {
 
 val repositoryModule: Module = module {
 
-    factory<RemoteRepository>{ RemoteRepositoryImpl()}
+    factory<RemoteRepository>{ RemoteRepositoryImpl(get())}
 
 }
 

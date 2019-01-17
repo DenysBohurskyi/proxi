@@ -14,7 +14,7 @@ class Networking(private val gson: Gson, private val okHttpClient: OkHttpClient.
 
     private fun <T> create(serviceClass: Class<T>, okHttpClient: OkHttpClient): T {
         val builder = Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("https://www.google.com/")
             .addConverterFactory(
                 GsonConverterFactory.create(gson))
         val retrofit = builder.client(okHttpClient).build()
