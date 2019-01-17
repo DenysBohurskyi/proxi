@@ -29,7 +29,6 @@ val viewModelModule: Module = module {
 val interactorModule: Module = module {
 
     factory<PriceListInteractor>{ PriceListInteractorImpl(get())}
-//    single<String>("name") { "TestExample" }
 }
 
 val repositoryModule: Module = module {
