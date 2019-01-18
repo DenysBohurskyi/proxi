@@ -20,10 +20,10 @@ class RemoteRepositoryImpl(private var restApi: RestService): RemoteRepository {
             }
 
             override fun onResponse(call: Call<MutableList<String?>>, response: Response<MutableList<String?>>) {
-                if (response.isSuccessful && response.body() != null) {
-                    resp = response.body().toString()
+                resp = if (response.isSuccessful && response.body() != null) {
+                    response.body().toString()
                 } else {
-                    resp = "chet pzdc"
+                    "chet"
                 }
             }
 
