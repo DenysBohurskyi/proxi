@@ -3,13 +3,13 @@ package com.taxi.optio.profitable.proxi.di
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.taxi.optio.profitable.proxi.BuildConfig
-import com.taxi.optio.profitable.proxi.main.domain.PriceListInteractor
-import com.taxi.optio.profitable.proxi.main.domain.PriceListInteractorImpl
+import com.taxi.optio.profitable.proxi.main.domain.interactors.PriceListInteractor
+import com.taxi.optio.profitable.proxi.main.domain.interactors.PriceListInteractorImpl
 import com.taxi.optio.profitable.proxi.main.repository.RemoteRepository
 import com.taxi.optio.profitable.proxi.main.repository.RemoteRepositoryImpl
 import com.taxi.optio.profitable.proxi.main.ui.MainViewModel
-import com.taxi.optio.profitable.proxi.utils.Networking
-import com.taxi.optio.profitable.proxi.utils.RestService
+import com.taxi.optio.profitable.proxi.utils.newtwork.Networking
+import com.taxi.optio.profitable.proxi.utils.newtwork.RestService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.viewmodel.ext.koin.viewModel
@@ -27,7 +27,11 @@ val viewModelModule: Module = module {
 
 val interactorModule: Module = module {
 
-    factory<PriceListInteractor>{ PriceListInteractorImpl(get())}
+    factory<PriceListInteractor>{
+        PriceListInteractorImpl(
+            get()
+        )
+    }
 }
 
 val repositoryModule: Module = module {
@@ -38,7 +42,8 @@ val repositoryModule: Module = module {
 
 val networkModule: Module = module {
 
-    single{ Networking(get(), get()).create(RestService::class.java) }
+    single{ Networking(get(), get())
+        .create(RestService::class.java) }
 
     single {
         GsonBuilder()
