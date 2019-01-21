@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/startPoint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 android:maxLines="1"
                 android:hint="Где меня подобрать">
 
-        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+        </androidx.appcompat.widget.AppCompatEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
 
