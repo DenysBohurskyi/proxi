@@ -18,7 +18,6 @@ class MainFragment : BaseFragment() {
     private var btnFind: CircularProgressImageButton? = null
 
     private var startPointAdapter: ArrayAdapter<String>? = null
-    private var startPointArray: MutableList<String?> = mutableListOf()
     private var startPoint: AppCompatAutoCompleteTextView? = null
     private var endPoint: AppCompatAutoCompleteTextView? = null
 
@@ -40,13 +39,14 @@ class MainFragment : BaseFragment() {
                 .distinctUntilChanged()
                 .filter { source -> source.isNotBlank() }
                 .flatMap { source -> viewModel.onStartPointTextChanged(source) }
-                .doOnNext { startPointArray.clear() }
                 .flatMap { result ->
                     Observable.fromIterable(result)
-                        .map { item -> startPointArray.add(item.title) }
+                        .map { item -> item.title }
+                        .toList()
+                        .toObservable()
                 }
-                .subscribe {
-                        result -> setStartPointAdapter(startPointArray)
+                .subscribe { result ->
+                    setStartPointAdapter(result)
                 }
         }
 
@@ -60,9 +60,18 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setStartPointAdapter(startPointArray: MutableList<String?>) {
+        startPointAdapter?.clear()
+        if (startPointArray.size < 10) startPoint?.threshold = 2
+        else startPoint?.threshold = 2
+
         context?.let {
-            startPointAdapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, startPointArray)
-            startPoint?.setAdapter(startPointAdapter)
+            startPointAdapter?.setNotifyOnChange(true)
+            if (startPointAdapter != null) {
+                startPointAdapter?.addAll(startPointArray)
+            } else {
+                startPointAdapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, startPointArray)
+                startPoint?.setAdapter(startPointAdapter)
+            }
         }
     }
 
