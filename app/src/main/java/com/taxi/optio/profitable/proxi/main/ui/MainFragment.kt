@@ -61,15 +61,14 @@ class MainFragment : BaseFragment() {
 
     private fun setStartPointAdapter(startPointArray: MutableList<String?>) {
         startPointAdapter?.clear()
-        if (startPointArray.size < 10) startPoint?.threshold = 2
-        else startPoint?.threshold = 2
-
         context?.let {
             startPointAdapter?.setNotifyOnChange(true)
             if (startPointAdapter != null) {
                 startPointAdapter?.addAll(startPointArray)
             } else {
                 startPointAdapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, startPointArray)
+                if (startPointArray.size < 10) startPoint?.threshold = 1
+                else startPoint?.threshold = 2
                 startPoint?.setAdapter(startPointAdapter)
             }
         }
