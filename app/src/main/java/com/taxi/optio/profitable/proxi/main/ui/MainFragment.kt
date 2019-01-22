@@ -37,7 +37,7 @@ class MainFragment : BaseFragment() {
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .map { charSequence -> charSequence.toString() }
                 .distinctUntilChanged()
-                .filter { source -> source.isNotBlank() }
+                .filter { source -> source.isNotBlank() && source.length > 1 }
                 .flatMap { source -> viewModel.onStartPointTextChanged(source) }
                 .flatMap { result ->
                     Observable.fromIterable(result)
@@ -60,17 +60,12 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setStartPointAdapter(startPointArray: MutableList<String?>) {
-        startPointAdapter?.clear()
         context?.let {
-            startPointAdapter?.setNotifyOnChange(true)
-            if (startPointAdapter != null) {
-                startPointAdapter?.addAll(startPointArray)
-            } else {
-                startPointAdapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, startPointArray)
-                if (startPointArray.size < 10) startPoint?.threshold = 1
-                else startPoint?.threshold = 2
-                startPoint?.setAdapter(startPointAdapter)
-            }
+            startPointAdapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, startPointArray)
+            startPointAdapter?.notifyDataSetChanged()
+            startPoint?.setAdapter(startPointAdapter)
+            startPoint?.threshold = 2
+            startPointAdapter?.notifyDataSetChanged()
         }
     }
 
