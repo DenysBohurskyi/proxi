@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import br.com.simplepass.loadingbutton.customViews.CircularProgressImageButton
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.jakewharton.rxbinding2.widget.threshold
 import com.taxi.optio.profitable.proxi.R
 import com.taxi.optio.profitable.proxi.base.BaseFragment
 import io.reactivex.Observable
@@ -18,7 +19,6 @@ class MainFragment : BaseFragment() {
     private var btnFind: CircularProgressImageButton? = null
 
     private var startPointAdapter: ArrayAdapter<String>? = null
-    private var startPointArray: MutableList<String?> = mutableListOf()
     private var startPoint: AppCompatAutoCompleteTextView? = null
     private var endPoint: AppCompatAutoCompleteTextView? = null
 
@@ -40,13 +40,14 @@ class MainFragment : BaseFragment() {
                 .distinctUntilChanged()
                 .filter { source -> source.isNotBlank() }
                 .flatMap { source -> viewModel.onStartPointTextChanged(source) }
-                .doOnNext { startPointArray.clear() }
                 .flatMap { result ->
                     Observable.fromIterable(result)
-                        .map { item -> startPointArray.add(item.title) }
+                        .map { item -> item.title }
+                        .toList()
+                        .toObservable()
                 }
-                .subscribe {
-                        result -> setStartPointAdapter(startPointArray)
+                .subscribe { result ->
+                    setStartPointAdapter(result)
                 }
         }
 
@@ -62,7 +63,12 @@ class MainFragment : BaseFragment() {
     private fun setStartPointAdapter(startPointArray: MutableList<String?>) {
         context?.let {
             startPointAdapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, startPointArray)
+            startPointAdapter?.notifyDataSetChanged()
             startPoint?.setAdapter(startPointAdapter)
+            if (startPointArray.size < 40) startPoint?.threshold = 1
+            else startPoint?.threshold = 2
+            startPointAdapter?.notifyDataSetChanged()
+
         }
     }
 
